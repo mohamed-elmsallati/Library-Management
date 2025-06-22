@@ -1,4 +1,4 @@
-// Class representing a physical book in the library
+// Represents a physical book in the library system
 public class Book {
     // Title of the book
     private String title;
@@ -9,68 +9,44 @@ public class Book {
     // Status indicating if the book is currently borrowed
     private boolean isBorrowed;
 
-    // Constructor to initialize a Book object
+    // Book constructor
     public Book(String title, String author, int isbn) {
         this.title = title;
         this.author = author;
         this.isbn = isbn;
-        this.isBorrowed = false; // Initially, the book is not borrowed
+        this.isBorrowed = false;
     }
 
-    // Getter for the book's title
+    // Get the book's title
     public String getTitle() {
         return title;
     }
-    // Getter for the book's author
+    // Get the book's author
     public String getAuthor() {
         return author;
     }
-    // Getter for the book's ISBN
+    // Get the book's ISBN
     public int getIsbn() {
         return isbn;
     }
-    // Check if the book is borrowed
+    // Is the book borrowed?
     public boolean isBorrowed() {
         return isBorrowed;
     }
-    // Borrow the book if it is not already borrowed
+    // Mark the book as borrowed
     public void borrow() {
         if (!isBorrowed) {
             isBorrowed = true;
         } else {
-            System.out.println("This book is already borrowed.");
+            System.out.println("Book is already checked out.");
         }
     }
-    // Return the book if it was borrowed
+    // Mark the book as returned
     public void returnBook() {
         if (isBorrowed) {
             isBorrowed = false;
         } else {
-            System.out.println("This book was not borrowed.");
+            System.out.println("Book was not checked out.");
         }
-    }
-
-    // Setter for the book's title
-    public void setTitle(String title) {
-        this.title = title;
-    }
-    // Setter for the book's author
-    public void setAuthor(String author) {
-        this.author = author;
-    }
-    // Setter for the book's ISBN
-    public void setIsbn(int isbn) {
-        this.isbn = isbn;
-    }
-    
-    // String representation of the Book object
-    @Override
-    public String toString() {
-        return "Book{" +
-                "title='" + title + '\'' +
-                ", author='" + author + '\'' +
-                ", isbn=" + isbn +
-                ", isBorrowed=" + isBorrowed +
-                '}';
     }
 }

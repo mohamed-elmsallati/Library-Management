@@ -1,120 +1,71 @@
 import java.util.Scanner;
 
-// Main class to run the Library Management System
+// Entry point for the Library System
 public class Main {
-
     public static void main(String[] args) {
-        // Create a new Library instance
-        Library library = new Library();
-        boolean running = true;
+        Library lib = new Library();
+        boolean active = true;
+        Scanner input = new Scanner(System.in);
 
-        // Main loop for user interaction
-        while (running) {
-            displayMenu();
-            
-            // Get user choice from menu
-            int choice = getScanner().nextInt();
-
-            switch (choice) {
+        while (active) {
+            showMenu();
+            int option = input.nextInt();
+            input.nextLine(); // consume newline
+            switch (option) {
                 case 1:
-                    // Add a new Book
-                    System.out.println("Enter Book Title:");
-                    String bookTitle = getScanner().next();
-                    System.out.println("Enter Book Author:");
-                    String bookAuthor = getScanner().next();
-                    System.out.println("Enter Book ISBN:");
-                    int bookIsbn = getScanner().nextInt();
-                    Book book = new Book(bookTitle, bookAuthor, bookIsbn);
-                    library.addBook(book);
+                    // Add a physical book
+                    System.out.print("Book Name: ");
+                    String name = input.nextLine();
+                    System.out.print("Writer: ");
+                    String writer = input.nextLine();
+                    System.out.print("ID: ");
+                    int id = input.nextInt();
+                    lib.addPhysicalBook(new Book(name, writer, id));
                     break;
-                    
                 case 2:
-                    // Add a new EBook, possibly from an existing Book
-                    System.out.println("do you want to add an EBook from an already existing book? (yes/no)");
-                    String response = getScanner().next();
-                    if (response.equalsIgnoreCase("yes")) {
-                        System.out.println("Enter the ISBN of the existing book:");
-                        int existingIsbn = getScanner().nextInt();
-                        Book existingBook = null;
-                        // Search for the existing book by ISBN
-                        for (Book b : library.getBooks()) {
-                            if (b.getIsbn() == existingIsbn) {
-                                existingBook = b;
-                                break;
-                            }
-                        }
-                        if (existingBook != null) {
-                            System.out.println("Enter EBook File Size:");
-                            double fileSize = getScanner().nextDouble();
-                            EBook eBook = new EBook(existingBook.getTitle(), existingBook.getAuthor(), existingBook.getIsbn(), fileSize);
-                            library.addEBook(eBook);
-                        } else {
-                            System.out.println("No book found with that ISBN.");
-                        }
-                    } 
-                    else {
-                        // Add a new EBook with user input
-                        System.out.println("Enter EBook Title:");
-                        String eBookTitle = getScanner().next();
-                        System.out.println("Enter EBook Author:");
-                        String eBookAuthor = getScanner().next();
-                        System.out.println("Enter EBook ISBN:");
-                        int eBookIsbn = getScanner().nextInt();
-                        System.out.println("Enter EBook File Size:");
-                        double eFileSize = getScanner().nextDouble();
-                        EBook eBook = new EBook(eBookTitle, eBookAuthor, eBookIsbn, eFileSize);
-                        library.addBook(eBook);
-                        library.addEBook(eBook);
-                    }
+                    // Add a digital book
+                    System.out.print("Digital Book Name: ");
+                    String dName = input.next();
+                    System.out.print("Writer: ");
+                    String dWriter = input.next();
+                    System.out.print("ID: ");
+                    int dId = input.nextInt();
+                    System.out.print("Size (MB): ");
+                    double size = input.nextDouble();
+                    lib.addDigitalBook(new EBook(dName, dWriter, dId, size));
                     break;
-                
                 case 3:
-                    // Borrow a book by ISBN
-                    library.listBooks();
-                    System.out.println("Enter the ISBN of the book you want to borrow:");
-                    int borrowIsbn = getScanner().nextInt();
-                    library.borrowBook(borrowIsbn);
+                    // Borrow a book
+                    System.out.print("Enter Book ID to borrow: ");
+                    int borrowId = input.nextInt();
+                    lib.borrowBook(borrowId);
                     break;
-                
                 case 4:
-                    // Return a borrowed book by ISBN
-                    library.listBooks();
-                    System.out.println("Enter the ISBN of the book you want to return:");
-                    library.returnBook(getScanner().nextInt());
+                    // Return a book
+                    System.out.print("Enter Book ID to return: ");
+                    int returnId = input.nextInt();
+                    lib.returnBook(returnId);
                     break;
                 case 5:
-                    // List all books and eBooks
-                    library.listBooks();
-                    library.listEBooks();
+                    // Exit
+                    active = false;
+                    System.out.println("Exiting system. Goodbye!");
                     break;
-                case 6:
-                    // Exit the program
-                    System.out.println("Thank you for using the Library Management System!");
-                    running = false;
-                    return;
                 default:
-                    // Handle invalid menu choice
-                    System.out.println("Invalid choice. Please try again.");
-                    main(args);
-                    return;
+                    System.out.println("Invalid option. Try again.");
             }
         }
+        input.close();
     }
 
-    // Display the main menu options
-    public static void displayMenu() {
-        System.out.println("Welcome to the Library Management System!");
-        System.out.println("1. Add a Book");
-        System.out.println("2. Add an EBook");
-        System.out.println("3. Borrow a Book");
-        System.out.println("4. Return a Book");
-        System.out.println("5. List all Books and EBooks");
-        System.out.println("6. Exit");
-        System.out.print("Please enter your choice: ");
-    }
-
-    // Get a new Scanner instance for user input
-    public static Scanner getScanner() {
-        return new Scanner(System.in);
+    // Display menu options
+    public static void showMenu() {
+        System.out.println("\n--- Library Menu ---");
+        System.out.println("1. Add Physical Book");
+        System.out.println("2. Add Digital Book");
+        System.out.println("3. Borrow Book");
+        System.out.println("4. Return Book");
+        System.out.println("5. Exit");
+        System.out.print("Choose an option: ");
     }
 }

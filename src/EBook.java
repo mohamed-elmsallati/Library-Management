@@ -1,34 +1,33 @@
-// Class representing an electronic book (EBook), which extends Book
+// Represents a digital book, inheriting from Book
 public class EBook extends Book {
-    // File size of the eBook in megabytes (MB)
-    private double fileSize; 
+    // Size in MB
+    private double fileSize;
 
-    // Constructor to initialize an EBook object
-    public EBook(String title, String author, int isbn, double fileSize) {
-        super(title, author, isbn);
+    // EBook constructor
+    public EBook(String name, String writer, int id, double fileSize) {
+        super(name, writer, id);
         this.fileSize = fileSize;
     }
 
-    // Getter for the file size
-    public double getFileSize() {
+    // Get the size in MB
+    public double getfileSize() {
         return fileSize;
     }
 
-    // Setter for the file size
-    public void setFileSize(double fileSize) {
+    // Set the size in MB
+    public void set(double fileSize) {
         this.fileSize = fileSize;
     }
 
-    // String representation of the EBook object
+    // Custom string output for EBook
     @Override
     public String toString() {
         return "EBook{" +
-                "title='" + getTitle() + '\'' +
-                ", author='" + getAuthor() + '\'' +
-                ", isbn=" + getIsbn() +
-                ", isBorrowed=" + isBorrowed() +
+                "name='" + getTitle() + '\'' +
+                ", writer='" + getAuthor() + '\'' +
+                ", id=" + getIsbn() +
+                ", checkedOut=" + isBorrowed() +
                 ", fileSize=" + fileSize +
                 '}';
     }
-    
 }

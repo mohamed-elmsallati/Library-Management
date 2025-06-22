@@ -1,75 +1,56 @@
 import java.util.ArrayList;
 
 public class Library {
-    // List to store physical books
-    private ArrayList<Book> Books = new ArrayList<Book>();
-    // List to store electronic books
-    private ArrayList<EBook> EBooks = new ArrayList<EBook>();
+    // List of physical books
+    private ArrayList<Book> physicalBooks;
+    // List of digital books
+    private ArrayList<EBook> digitalBooks;
 
-    // Constructor initializes the book lists
+    // Library constructor
     public Library() {
-        Books = new ArrayList<Book>();
-        EBooks = new ArrayList<EBook>();
+        physicalBooks = new ArrayList<>();
+        digitalBooks = new ArrayList<>();
     }
 
-    // Add a physical book to the library
-    public void addBook(Book book) {
-        Books.add(book);
+    // Add a physical book
+    public void addPhysicalBook(Book b) {
+        physicalBooks.add(b);
     }
 
-    // Add an eBook to the library
-    public void addEBook(EBook eBook) {
-        EBooks.add(eBook);
+    // Add a digital book
+    public void addDigitalBook(EBook eb) {
+        digitalBooks.add(eb);
     }
 
-    // Borrow a book by its ISBN if available
-    public void borrowBook(int isbn) {
-        for (Object book : Books) {
-            // Check if ISBN matches and book is not borrowed
-            if (((Book) book).getIsbn() == isbn && !((Book) book).isBorrowed()) {
-                ((Book) book).borrow();
-                System.out.println("You have borrowed: " + ((Book) book).getTitle());
+    // Borrow a book by ID
+    public void borrowBook(int id) {
+        for (Book b : physicalBooks) {
+            if (b.getIsbn() == id && !b.isBorrowed()) {
+                b.borrow();
+                System.out.println("Borrowed: " + b.getTitle());
                 return;
             }
         }
-        System.out.println("Book not found or already borrowed.");
+        System.out.println("Book not available or already checked out.");
     }
 
-    // Return a borrowed book by its ISBN
-    public void returnBook(int isbn) {
-        for (Object book : Books) {
-            if (((Book) book).getIsbn() == isbn && ((Book) book).isBorrowed()) {
-                ((Book) book).returnBook();
-                System.out.println("You have returned: " + ((Book) book).getTitle());
+    // Return a book by ID
+    public void returnBook(int id) {
+        for (Book b : physicalBooks) {
+            if (b.getIsbn() == id && b.isBorrowed()) {
+                b.returnBook();
+                System.out.println("Returned: " + b.getTitle());
                 return;
             }
         }
-        System.out.println("Book not found or was not borrowed.");
+        System.out.println("Book not found or not checked out.");
     }
 
-    // Get the list of physical books
-    public ArrayList<Book> getBooks() {
-        return Books;
+    // Getters for lists
+    public ArrayList<Book> getPhysicalBooks() {
+        return physicalBooks;
     }
-
-    // Get the list of eBooks
-    public ArrayList<EBook> getEBooks() {
-        return EBooks;
-    }
-
-    // Print all physical books in the library
-    public void listBooks() {
-        System.out.println("Books in the library:");
-        for (Object book : Books) {
-            System.out.println(book);
-        }
-    }
-
-    // Print all eBooks in the library
-    public void listEBooks() {
-        System.out.println("EBooks in the library:");
-        for (Object eBook : EBooks) {
-            System.out.println(eBook);
-        }
+    public ArrayList<EBook> getDigitalBooks() {
+        return digitalBooks;
     }
 }
